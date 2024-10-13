@@ -4,9 +4,13 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - task_2
 
 env:
   TF_VAR_region: ${{ secrets.REGION }}
+  TF_VAR_ssh_pk: ${{ secrets.BASTION_SSH_PK }}
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   GHA_ROLE: ${{ secrets.GHA_ROLE }}
   REGION: ${{ secrets.REGION }}
@@ -69,25 +73,25 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -input=false
 
-  terraform_apply:
-    runs-on: ubuntu-latest
-    needs: terraform_plan
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # terraform_apply:
+  #   runs-on: ubuntu-latest
+  #   needs: terraform_plan
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-region: ${{ env.REGION  }}
-          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.GHA_ROLE }}
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v4
+  #       with:
+  #         aws-region: ${{ env.REGION  }}
+  #         role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.GHA_ROLE }}
 
-      - name: Restore terraform cache
-        uses: actions/cache/restore@v4
-        with:
-          path: .terraform*
-          key: terraform-cache-${{ runner.os }}-${{ github.run_id }}
-          fail-on-cache-miss: true
+  #     - name: Restore terraform cache
+  #       uses: actions/cache/restore@v4
+  #       with:
+  #         path: .terraform*
+  #         key: terraform-cache-${{ runner.os }}-${{ github.run_id }}
+  #         fail-on-cache-miss: true
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+  #     - name: Terraform Apply
+  #       run: terraform apply -auto-approve

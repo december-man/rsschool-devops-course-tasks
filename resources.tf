@@ -1,3 +1,5 @@
+# Task 1: AWS Account Setup Resources
+
 # GHA Role Provision via OIDC
 resource "aws_iam_openid_connect_provider" "gha_oidc" {
   url             = "https://token.actions.githubusercontent.com"
