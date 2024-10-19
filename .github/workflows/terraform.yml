@@ -4,11 +4,9 @@ on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - task_3
 
 env:
+  TF_VAR_token: ${{ vars.TOKEN }}
   TF_VAR_region: ${{ secrets.REGION }}
   TF_VAR_ssh_pk: ${{ secrets.BASTION_SSH_PK }}
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}

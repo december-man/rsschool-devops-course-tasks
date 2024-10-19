@@ -75,3 +75,10 @@ variable "ssh_inbound_ip" {
   description = "Specify CIDR block to limit inbound ssh traffic to the NAT Instance/Bastion Host"
   default     = ["0.0.0.0/0"]
 }
+
+# Task 3: k3s Setup
+
+variable "token" {
+  description = "k3s Server token for k3s Agents"
+  type        = string
+}
