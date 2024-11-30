@@ -9,12 +9,12 @@ curl -sfL https://get.k3s.io | K3S_TOKEN=${token} sh -s -
 
 # Configure kubeconfig for non-root access
 sudo ln -s /usr/local/bin/k3s /usr/bin/k3s
-sudo mkdir -p ~/.kube
-sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
-sudo chown ec2-user:ec2-user ~/.kube/config
-sudo chmod 600 ~/.kube/config
-echo 'export KUBECONFIG=~/.kube/config' >> ~/.bashrc
-source ~/.bashrc
+sudo mkdir -p /home/ec2-user/.kube
+sudo cp /etc/rancher/k3s/k3s.yaml /home/ec2-user/.kube/config
+sudo chown ec2-user:ec2-user /home/ec2-user/.kube/config
+sudo chmod 600 /home/ec2-user/.kube/config
+echo 'export KUBECONFIG=/home/ec2-user/.kube/config' >> /home/ec2-user/.bashrc
+source /home/ec2-user/.bashrc
 
 # Install Telnet
 sudo yum install telnet -y

@@ -139,6 +139,17 @@ resource "aws_security_group_rule" "ingress_metrics_k3s_server" {
   protocol          = "tcp"
 }
 
+# Allow Prometheus Node Exporter Metrics
+resource "aws_security_group_rule" "ingress_node_exporter_k3s_server" {
+  description       = "Allow inbound traffic to k3s Agent for Node Exporter metrics"
+  security_group_id = aws_security_group.k3s_server_sg.id
+  type              = "ingress"
+  cidr_blocks       = [var.vpc_cidr]
+  from_port         = 9100
+  to_port           = 9100
+  protocol          = "tcp"
+}
+
 resource "aws_security_group_rule" "egress_any_k3s_server" {
   description       = "Allow any outbound traffic from k3s Server Instance"
   security_group_id = aws_security_group.k3s_server_sg.id
@@ -199,6 +210,17 @@ resource "aws_security_group_rule" "ingress_metrics_k3s_agent" {
   cidr_blocks       = [var.vpc_cidr]
   from_port         = 10250
   to_port           = 10250
+  protocol          = "tcp"
+}
+
+# Allow Prometheus Node Exporter Metrics
+resource "aws_security_group_rule" "ingress_node_exporter_k3s_agent" {
+  description       = "Allow inbound traffic to k3s Agent for Node Exporter metrics"
+  security_group_id = aws_security_group.k3s_agent_sg.id
+  type              = "ingress"
+  cidr_blocks       = [var.vpc_cidr]
+  from_port         = 9100
+  to_port           = 9100
   protocol          = "tcp"
 }
 
